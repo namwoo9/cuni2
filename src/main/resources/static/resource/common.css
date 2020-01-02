@@ -1,0 +1,133 @@
+/*  폰트 적용 */
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+html {
+	font-family: "Noto Sans KR", sans-serif;
+}
+
+/* 노말라이즈 */
+body, ul, li, h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+a:link {
+	color: #lightblue;
+}
+
+/* 라이브러리 */
+.click {
+	cursor: pointer;
+}
+
+.con {
+	margin: 0 auto;
+}
+
+.img-box>img {
+	width: 100%;
+	display: block;
+}
+
+.row::after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.cell {
+	float: left;
+	box-sizing: border-box;
+}
+
+.cell-right {
+	float: right;
+	box-sizing: border-box;
+}
+
+.margin-0-auto {
+	margin: 0 auto;
+}
+
+.block {
+	display: block;
+}
+
+/*제목 내용 검색창*/
+.inline-block {
+	display: inline-block;
+}
+
+/*제목 내용 검색창*/
+.text-align-center {
+	text-align: center;
+}
+
+.line-height-0-ch-only {
+	line-height: 0;
+}
+
+.line-height-0-ch-only>* {
+	line-height: normal;
+}
+
+.relative {
+	position: relative;
+}
+
+.absolute-left {
+	position: absolute;
+	left: 0;
+}
+
+.absolute-right {
+	position: absolute;
+	right: 0;
+}
+
+.absolute-middle {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+/* 커스텀 */
+/* 반응형 레이아웃 */
+/*.con 전체 미지 */
+.con {
+	max-width: 1150px;
+}
+
+.con-min-width {
+	min-width: 320px;
+}
+
+html, body {
+	overflow-x: hidden;
+}
+
+/*테이블 크기*/
+.table-common table {
+	width: 100%;
+	/*테두리선 깔끔하게*/
+	border-collapse: collapse;
+}
+
+.table-common table th, .table-common table td {
+	/*테두리선 색깔*/
+	border: 1px solid black;
+	/*테두리 패딩*/
+	padding: 6px;
+	
+	
+}
+
+.table-common table input[type="text"], .table-common table input[type="password"],
+	.table-common table input[type="email"], .table-common table textarea {
+	width: 90%;
+	padding: 10px;
+	font-size: 1rem;
+	
+	/*테이블 텍스트창 */
+}
