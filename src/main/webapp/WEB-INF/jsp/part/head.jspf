@@ -80,14 +80,6 @@
 		</div>
 
 	</c:if>
-	<c:if test="${loginedMember.permissionLevel > 0}">
-		<div class="con"
-			style="float: right; position: absolute; right: 30%; top: 15px;">
-			<a href="/member/authority"
-				style="text-decoration: none; color: inherit; border: 1px solid red;">회원관리</a>
-		</div>
-	</c:if>
-
 
 	<!-- 	<div class="toggleBG con" onclick="mc();" -->
 	<!-- 		style="float: right; position: absolute; right: 30%; top: 15px;"> -->
@@ -109,6 +101,10 @@
 					class="block btn-a">홈</a></li>
 				<li class="cell margin-right-size-1"><a href="#"
 					class="block btn-a" onclick="fn_chat();">실시간채팅</a></li>
+				<c:if test="${loginedMember.permissionLevel > 0}">
+					<li class="cell margin-right-size-1"><a
+						href="/member/authority" class="block btn-a"">회원관리</a></li>
+				</c:if>
 				<li class="cell margin-right-size-1"><a
 					href="/article/list?boardId=1" class="block btn-a">공지시항</a></li>
 				<li class="cell margin-right-size-1"><a
