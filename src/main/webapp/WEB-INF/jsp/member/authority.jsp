@@ -18,11 +18,16 @@
 		<div>가입날짜 : ${member.regDate}</div>
 		<div>아이디 : ${member.loginId}</div>
 		<div>비번 : ${member.loginPw}</div>
+		<div>이메일 : ${member.email}</div>
 		<div>emailAuthKey : ${member.emailAuthKey}</div>
 		<div>emailAuthStatus : ${member.emailAuthStatus}</div>
 		<div>delStatus : ${member.delStatus}</div>
-		<div>email : ${member.email}</div>
 		<div>permissionLevel : ${member.permissionLevel}</div>
+		<div>stop : ${member.stop}</div>
+		<div>
+			<a href="/member/idStop?id=${member.id}"><button>정지</button></a> <a
+				href="/member/idStopCancel?id=${member.id}"><button>해제</button></a>
+		</div>
 		<hr>
 	</c:forEach>
 </div>

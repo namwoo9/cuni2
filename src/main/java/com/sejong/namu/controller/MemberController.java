@@ -30,6 +30,66 @@ public class MemberController {
 		return "member/login";
 	}
 
+	@RequestMapping("/member/idStop")
+	@ResponseBody
+	public String idStop(Model model, HttpServletRequest request, int id) {
+
+		Member member = (Member) request.getAttribute("loginedMember");
+
+		StringBuilder sb2 = new StringBuilder();
+
+		if (member.getPermissionLevel() < 1) {
+			sb2.append("<script>");
+			sb2.append(" alert('권한이 없습니다.'); ");
+			sb2.append(" history.back(); ");
+//			model.addAttribute("alertMsg", "권한이 없습니다.");
+//			model.addAttribute("historyBack", true);
+			sb2.append("</script>");
+			return sb2.toString();
+		}
+
+		memberService.stop(id);
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<script>");
+		sb.append(" alert('정지');");
+		sb.append(" location.href='./authority';");
+		sb.append("</script>");
+
+		return sb.toString();
+	}
+
+	@RequestMapping("/member/idStopCancel")
+	@ResponseBody
+	public String idStopCancel(Model model, HttpServletRequest request, int id) {
+
+		Member member = (Member) request.getAttribute("loginedMember");
+
+		StringBuilder sb2 = new StringBuilder();
+
+		if (member.getPermissionLevel() < 1) {
+			sb2.append("<script>");
+			sb2.append(" alert('권한이 없습니다.'); ");
+			sb2.append(" history.back(); ");
+//			model.addAttribute("alertMsg", "권한이 없습니다.");
+//			model.addAttribute("historyBack", true);
+			sb2.append("</script>");
+			return sb2.toString();
+		}
+
+		memberService.stopCancel(id);
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<script>");
+		sb.append(" alert('해제');");
+		sb.append(" location.href='./authority';");
+		sb.append("</script>");
+
+		return sb.toString();
+	}
+
 	@RequestMapping("member/authority")
 	public String authority(Model model, @RequestParam Map<String, Object> param, HttpServletRequest request) {
 

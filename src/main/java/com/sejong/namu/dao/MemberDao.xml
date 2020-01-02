@@ -11,9 +11,10 @@
 		#{loginPw}
 		AND delStatus = 0
 	</select>
-	
+
 	<select id="getList" parameterType="Map" resultType="Member">
-		SELECT * FROM member ORDER BY id DESC
+		SELECT *
+		FROM member ORDER BY id DESC
 	</select>
 
 	<select id="getOne" parameterType="long" resultMap="Member">
@@ -85,8 +86,9 @@
 	<select id="checkOverId" parameterType="String" resultType="int">
 		SELECT COUNT(*) FROM `member` WHERE loginId = #{loginId}
 	</select>
-	
-	<select id="checkOverName" parameterType="String" resultType="int">
+
+	<select id="checkOverName" parameterType="String"
+		resultType="int">
 		SELECT COUNT(*) FROM `member` WHERE name = #{name}
 	</select>
 
@@ -103,6 +105,18 @@
 		SET
 		delStatus = 1
 		WHERE id = #{id}
+	</update>
+	
+	<update id="stop" parameterType="int">
+		UPDATE member
+		SET stop = stop + 1
+		WHERE id = #{id}
+	</update>
+	
+	<update id="stopCancel" parameterType="int">
+		UPDATE member
+		SET `stop` = 0
+		WHERE id = #{id};
 	</update>
 
 	<resultMap type="Member" id="Member">

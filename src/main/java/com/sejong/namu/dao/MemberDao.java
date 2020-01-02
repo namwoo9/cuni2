@@ -36,4 +36,8 @@ public interface MemberDao {
 
 	public List<Member> getList(Map<String, Object> param);
 
+	public void stop(int id);
+
+	public void stopCancel(int id);
+
 }

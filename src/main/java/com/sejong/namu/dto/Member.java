@@ -20,4 +20,5 @@ public class Member {
 	private boolean emailAuthStatus;
 	private boolean delStatus;
 	private int permissionLevel;
+	private int stop;
 }

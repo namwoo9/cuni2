@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.groovy.util.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,7 @@ import com.sejong.namu.dto.Member;
 import com.sejong.namu.handler.MailHandler;
 import com.sejong.namu.util.CUtil;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Service
-@Slf4j
 public class MemberServiceImpl implements MemberService {
 	@Value("${custom.emailSender}")
 	private String emailSender;
@@ -31,6 +29,8 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDao memberDao;
 	@Autowired
 	private JavaMailSender sender;
+
+	public HttpSession session;
 
 	@Override
 	public Map<String, Object> login(Map<String, Object> param) {
@@ -50,14 +50,20 @@ public class MemberServiceImpl implements MemberService {
 
 		if (loginedMember.isEmailAuthStatus() == false) {
 			resultCode = "F-2";
-			msg = "이메일 인증을 진행해주세요.";
+			msg = "이메일 인증을 진행해주세요";
 
 			return Maps.of("resultCode", resultCode, "msg", msg);
 		}
 		String loginedMemberName = "";
-
 		loginedMemberId = loginedMember.getId();
 		loginedMemberName = loginedMember.getName();
+
+		if (loginedMember.getStop() > 0) {
+			resultCode = "F-3";
+			msg = "정지된 회원 입니다";
+
+			return Maps.of("resultCode", resultCode, "msg", msg);
+		}
 
 		if (loginedMember.getPermissionLevel() != 1) {
 			resultCode = "S-1";
@@ -230,5 +236,15 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public List<Member> getList(Map<String, Object> param) {
 		return memberDao.getList(param);
+	}
+
+	@Override
+	public void stop(int id) {
+		memberDao.stop(id);
+	}
+
+	@Override
+	public void stopCancel(int id) {
+		memberDao.stopCancel(id);		
 	}
 }
