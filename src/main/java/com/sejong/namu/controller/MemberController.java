@@ -31,7 +31,16 @@ public class MemberController {
 	}
 
 	@RequestMapping("member/authority")
-	public String authority(Model model, @RequestParam Map<String, Object> param) {
+	public String authority(Model model, @RequestParam Map<String, Object> param, HttpServletRequest request) {
+
+		Member member = (Member) request.getAttribute("loginedMember");
+
+		if (member.getPermissionLevel() < 1) {
+			model.addAttribute("alertMsg", "권한이 없습니다.");
+			model.addAttribute("historyBack", true);
+
+			return "common/redirect";
+		}
 
 		List<Member> list = memberService.getList(param);
 
