@@ -1,5 +1,6 @@
 package com.sejong.namu.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -32,5 +33,7 @@ public interface MemberDao {
 	public int checkOverId(String loginId);
 
 	public int checkOverName(String name);
+
+	public List<Member> getList(Map<String, Object> param);
 
 }

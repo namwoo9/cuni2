@@ -1,6 +1,7 @@
 package com.sejong.namu.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -226,4 +227,8 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.checkOverName(name);
 	}
 
+	@Override
+	public List<Member> getList(Map<String, Object> param) {
+		return memberDao.getList(param);
+	}
 }

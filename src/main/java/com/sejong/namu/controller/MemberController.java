@@ -1,6 +1,7 @@
 
 package com.sejong.namu.controller;
 
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -29,7 +30,17 @@ public class MemberController {
 		return "member/login";
 	}
 
-	@RequestMapping("member/findInfo")
+	@RequestMapping("member/authority")
+	public String authority(Model model, @RequestParam Map<String, Object> param) {
+
+		List<Member> list = memberService.getList(param);
+
+		model.addAttribute("list", list);
+
+		return "member/authority";
+	}
+
+	@RequestMapping("member/auto")
 	public String findInfo() {
 		return "member/findInfo";
 	}
@@ -70,14 +81,14 @@ public class MemberController {
 
 		return memberService.userIdCheck(loginId);
 	}
-	
+
 	@RequestMapping(value = "/user/nameCheck", method = RequestMethod.GET)
 	@ResponseBody
 	public int nameCheck(@RequestParam("name") String name) {
 
 		return memberService.userNameCheck(name);
 	}
-	
+
 	@RequestMapping("member/doJoin")
 	public String doJoin(Model model, @RequestParam Map<String, Object> param, HttpSession session) {
 
@@ -215,7 +226,7 @@ public class MemberController {
 		String resultCode = (String) rs.get("resultCode");
 
 		model.addAttribute("alertMsg", msg);
-		
+
 		String redirectUrl = "/member/login";
 		model.addAttribute("redirectUrl", redirectUrl);
 

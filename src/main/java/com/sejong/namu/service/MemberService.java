@@ -1,5 +1,6 @@
 package com.sejong.namu.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,5 +33,6 @@ public interface MemberService {
 
 	public int userNameCheck(String name);
 
-	
+	public List<Member> getList(Map<String, Object> param);
+
 }
