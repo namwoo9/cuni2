@@ -109,7 +109,7 @@
 	
 	<update id="stop" parameterType="int">
 		UPDATE member
-		SET stop = stop + 1
+		SET stop = 1
 		WHERE id = #{id}
 	</update>
 	
