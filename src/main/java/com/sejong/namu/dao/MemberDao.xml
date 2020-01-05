@@ -92,6 +92,11 @@
 		SELECT COUNT(*) FROM `member` WHERE name = #{name}
 	</select>
 
+	<select id="checkOverbeforePw" parameterType="String"
+		resultType="int">
+		SELECT COUNT(*) FROM `member` WHERE loginPw = #{loginPw}
+	</select>
+
 
 	<update id="updateAuthStatus" parameterType="map">
 		UPDATE `member`
@@ -106,16 +111,18 @@
 		delStatus = 1
 		WHERE id = #{id}
 	</update>
-	
+
 	<update id="stop" parameterType="int">
 		UPDATE member
 		SET stop = 1
-		WHERE id = #{id}
+		WHERE
+		id = #{id}
 	</update>
-	
+
 	<update id="stopCancel" parameterType="int">
 		UPDATE member
-		SET `stop` = 0
+		SET `stop` =
+		0
 		WHERE id = #{id};
 	</update>
 

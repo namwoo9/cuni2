@@ -40,4 +40,6 @@ public interface MemberDao {
 
 	public void stopCancel(int id);
 
+	public int checkOverbeforePw(String beforePw);
+
 }

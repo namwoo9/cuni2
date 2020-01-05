@@ -158,6 +158,13 @@ public class MemberController {
 		return memberService.userNameCheck(name);
 	}
 
+	@RequestMapping(value = "/user/beforePwCheck", method = RequestMethod.GET)
+	@ResponseBody
+	public int beforePwCheck(@RequestParam("beforePw") String beforePw) {
+
+		return memberService.userbeforePwCheck(beforePw);
+	}
+
 	@RequestMapping("member/doJoin")
 	public String doJoin(Model model, @RequestParam Map<String, Object> param, HttpSession session) {
 
@@ -215,20 +222,11 @@ public class MemberController {
 		param.put("id", loginedMemberId);
 
 		String name = request.getParameter("name");
-
-//		String name = request.getParameter("name");
-//
-//		if (name == null) {
-//			response.getWriter().append("<script> alert('title을 입력해주세요.'); history.back(); </script>");
-//			return name;
-//		}
-//
+		String afterPw = request.getParameter("afterPw");
+		
+		
 		name = name.trim();
-//  
-//		if (name.length() == 0 && name.matches("[0-9|a-z|A-Z|가-힣|]*")) {
-//			response.getWriter().append("<script> alert('title을 입력해주세요.'); history.back(); </script>");
-//			return name;
-//		}
+		afterPw = afterPw.trim();
 		StringBuilder sb2 = new StringBuilder();
 		if (name.length() == 0) {
 			sb2.append("<script>");
@@ -252,16 +250,14 @@ public class MemberController {
 			sb2.append("</script>");
 			return sb2.toString();
 		}
-
-//		if (boardId == 2) {
-//
-//		} else {
-//			sb2.append("<script>");
-//			sb2.append("alert('권한이 없습니다.");
-//			sb2.append("history.back();");
-//			sb2.append("</script>");
-//			return sb2.toString();
-//		}
+		
+		if (afterPw.length() <= 3) {
+			sb2.append("<script>");
+			sb2.append("alert('비밀번호는 4자리 이상 입력해주세요');");
+			sb2.append("history.back();");
+			sb2.append("</script>");
+			return sb2.toString();
+		}
 
 		Map<String, Object> updateRs = memberService.update(param);
 

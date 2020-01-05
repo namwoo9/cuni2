@@ -39,4 +39,6 @@ public interface MemberService {
 
 	public void stopCancel(int id);
 
+	public int userbeforePwCheck(String beforePw);
+
 }

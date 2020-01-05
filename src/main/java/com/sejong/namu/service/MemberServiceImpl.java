@@ -247,4 +247,9 @@ public class MemberServiceImpl implements MemberService {
 	public void stopCancel(int id) {
 		memberDao.stopCancel(id);		
 	}
+
+	@Override
+	public int userbeforePwCheck(String beforePw) {
+		return memberDao.checkOverbeforePw(beforePw);
+	}
 }

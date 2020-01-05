@@ -100,7 +100,7 @@ $(function(){
 		name = name.trim();
 
 		if ( name.length > 0 ) {
-			var loginNameCheck = RegExp(/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/);
+			var loginNameCheck = RegExp(/^[가-힣|a-z|A-Z|0-9|\*]+$/);
 			$.ajax({	
 				url : '${pageContext.request.contextPath}/user/nameCheck?name='+ name,
 				type : 'get',
