@@ -9,6 +9,8 @@
 <script>
 var allClear = {
 		name : false,
+		afterPw : false,
+		checkPw : false,
 };
 	function update_reg_submit_disabled() {
 		$('#reg_submit').prop('disabled', true);
@@ -73,8 +75,74 @@ $(function(){
 			});
 		}
 	});
+
+
+
+	$("#afterPw").blur(function() {
+		allClear['afterPw'] = false;
+		update_reg_submit_disabled();
+		
+		var afterPw = $('#afterPw').val();
+// 		var checkPw = $('#checkPw').val();
+
+		if(afterPw.length > 0){
+			if (afterPw.length <= 3) {
+				$('#afterPw').val('');
+				$('#afterPw_check').text('최소 4자리 입력해주세요.');
+				$('#afterPw_check').css('color', 'red');	
+			}
+// 			if (loginId == checkPw) {
+// 				$('#loginPw').val('');
+// 				$('#Pw_check').text('아이디와 비밀번호를 다르게 입력해주세요.');
+// 				$('#Pw_check').css('color', 'red');
+// 			} 
+
+			else {
+				$('#afterPw_check').text('');		
+				allClear['afterPw'] = true;
+				update_reg_submit_disabled();
+			}
+		}
+
+		// id = "id_reg" / name = "userId"
+	});
+
+	$("#checkPw").blur(function() {
+		allClear['checkPw'] = false;
+		update_reg_submit_disabled();
+		
+		var checkPw = $("#checkPw").val();
+		var afterPw = $("#afterPw").val();
+
+		if ( checkPw.length > 0 ) {
+			
+			if(afterPw != checkPw){
+				$('#afterPw').val('');
+				$('#checkPw').val('');
+				$('#afterPw').focus();
+				$('#checkPw_check').text('비밀번호와 일치하지 않습니다.');
+				$('#checkPw_check').css('color', 'red');
+				
+			} else {
+				$('#checkPw_check').text('비밀번호가 일치합니다.');
+				$('#checkPw_check').css('color', 'blue');
+
+				allClear['checkPw'] = true;
+				update_reg_submit_disabled();
+			}
+		}
+	});
 });
+
+function dd() {
+	$("#name").blur();
+	$("#afterPw").blur();
+	$("#checkPw").blur();
+}
+
+
 </script>
+
 
 
 <div class="con table-common">
@@ -102,18 +170,18 @@ $(function(){
 				<!-- 				</tr> -->
 				<tr>
 					<th>변경할 비밀번호</th>
-					<td><input type="password" name="afterPw" maxlength="10"
-						placeholder="변경할 비밀번호"></td>
+					<td><input type="password" name="afterPw"  id="afterPw" maxlength="10"
+						placeholder="변경할 비밀번호"><div class="check_font" id="afterPw_check"></div></td>
 				</tr>
 				<tr>
 					<th>비밀번호 확인</th>
-					<td><input type="password" name="checkPw" maxlength="10"
-						placeholder="변경할 비밀번호 확인"></td>
+					<td><input type="password" name="checkPw" id="checkPw" maxlength="10"
+						placeholder="변경할 비밀번호 확인"><div class="check_font" id="checkPw_check"></div></td>
 				</tr>
 
 				<tr>
 					<th>수정</th>
-					<td><input class="btn-a" type="submit" value="수정"
+					<td><input onclick="dd();" class="btn-a" type="submit" value="수정"
 						id="reg_submit"> <input class="btn-a" type="reset"
 						value="취소"
 						onclick="location.href = '/member/myPage?id=${loginedMember.id}';">
