@@ -223,10 +223,10 @@ public class MemberController {
 
 		String name = request.getParameter("name");
 		String afterPw = request.getParameter("afterPw");
-		
-		
+
 		name = name.trim();
 		afterPw = afterPw.trim();
+
 		StringBuilder sb2 = new StringBuilder();
 		if (name.length() == 0) {
 			sb2.append("<script>");
@@ -250,7 +250,7 @@ public class MemberController {
 			sb2.append("</script>");
 			return sb2.toString();
 		}
-		
+
 		if (afterPw.length() <= 3) {
 			sb2.append("<script>");
 			sb2.append("alert('비밀번호는 4자리 이상 입력해주세요');");

@@ -27,6 +27,7 @@ $(function(){
 		update_reg_submit_disabled();
 		
 		// id = "id_reg" / name = "userId"
+		var memberId = '${loginedMember.getName()}';
 		var name = $('#name').val();
 		name = name.trim();
 
@@ -35,15 +36,21 @@ $(function(){
 			$.ajax({	
 				url : '${pageContext.request.contextPath}/user/nameCheck?name='+ name,
 				type : 'get',
+				name : name,
 				success : function(data) {
+					
 					console.log("1 = 중복o / 0 = 중복x : "+ data);							
-					if (data == 1) {
+					if (data == 1 && memberId == name) {
 						// 1 : 아이디가 중복되는 문구
+						$("#name_check").text("사용 가능한 닉네임 입니다.");
+	 					$("#name_check").css("color", "blue");
+	 					allClear['name'] = true;
+	 					update_reg_submit_disabled();
+					} else {
 						$("#name_check").text("사용중인 닉네임입니다");
 						$("#name_check").css("color", "red");
 					}
-	 				if (!loginNameCheck.test($('#name').val())) {
-						$('#name').focus();		
+	 				if (!loginNameCheck.test($('#name').val())) {		
 	 					$("#name_check").text("한글, 영문, 숫자만 입력 해주세요.");
 	 					$("#name_check").css("color", "red");
 	 				}
@@ -81,12 +88,14 @@ $(function(){
 			<tbody>
 				<tr>
 					<th>닉네임</th>
-					<td><input type="text" id="name" name="name" value="${loginedMember.name}"><div class="check_font" id="name_check"></div></td>
+					<td><input type="text" id="name" name="name"
+						value="${loginedMember.name}" autocomplete="off">
+					<div class="check_font" id="name_check"></div></td>
 				</tr>
-<!-- 				<tr> -->
-<!-- 					<th>이메일</th> -->
-<%-- 					<td><input type="email" name="email" value="${loginedMember.email}"></td> --%>
-<!-- 				</tr> -->
+				<!-- 				<tr> -->
+				<!-- 					<th>이메일</th> -->
+				<%-- 					<td><input type="email" name="email" value="${loginedMember.email}"></td> --%>
+				<!-- 				</tr> -->
 				<!-- 				<tr> -->
 				<!-- 					<th>기존 비밀번호</th> -->
 				<!-- 					<td><input type="password" name="beforePw"></td> -->
@@ -104,8 +113,9 @@ $(function(){
 
 				<tr>
 					<th>수정</th>
-					<td><input class="btn-a" type="submit" value="수정" id="reg_submit"> <input
-						class="btn-a" type="reset" value="취소"
+					<td><input class="btn-a" type="submit" value="수정"
+						id="reg_submit"> <input class="btn-a" type="reset"
+						value="취소"
 						onclick="location.href = '/member/myPage?id=${loginedMember.id}';">
 						<button class="btn-a" type="button"
 							onclick="if ( confirm('정말 탈퇴하시겠습니까?') ) location.href = './doSecession'">회원탈퇴</button></td>
