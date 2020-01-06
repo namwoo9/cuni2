@@ -44,7 +44,7 @@ $(function(){
 
 		if ( loginId.length > 0 ) 
 		{
-			var loginIdCheck = RegExp(/^[A-Za-z0-9_\-]{5,20}$/);
+			var loginIdCheck = RegExp(/^[A-Za-z0-9_\-]{4,20}$/);
 
 			$('#reg_submit').prop('disabled', true);
 
@@ -55,17 +55,13 @@ $(function(){
 					console.log("1 = 중복o / 0 = 중복x : "+ data);							
 					if (data == 1) {
 						// 1 : 아이디가 중복되는 문구
-// 						$('#loginId').focus();
-						$("#id_check").text("사용중인 아이디입니다");
+						$("#id_check").text("사용중인 아이디 입니다.");
 						$("#id_check").css("color", "red");
 					} else {
 						$("#id_check").text("");
 					}
-
 					if (!loginIdCheck.test($('#loginId').val())) {
-						
-// 						$('#loginId').focus();		
-						$("#id_check").text("영문·숫자만 입력 해주세요.");
+						$("#id_check").text("영문 · 숫자로 4글자 이상 입력 해주세요.");
 						$("#id_check").css("color", "red");
 					} 
 					if (data == 0 && loginIdCheck.test($('#loginId').val())) {
@@ -74,12 +70,10 @@ $(function(){
 						allClear['loginId'] = true;
 						update_reg_submit_disabled();
 					}
-					if(loginId == ""){
-						$('#loginId').val('');
-// 						$('#loginId').focus();		
-						$('#id_check').text('아이디를 입력해주세요');
+					if(loginId.length < 1){
+						$('#loginId').val('');		
+						$('#id_check').text('아이디를 입력해주세요.');
 						$('#id_check').css('color', 'red');
-										
 					}
 				},
 				error : function() {
@@ -96,11 +90,9 @@ $(function(){
 		
 		// id = "id_reg" / name = "userId"
 		var name = $('#name').val();
-
 		name = name.trim();
-
 		if ( name.length > 0 ) {
-			var loginNameCheck = RegExp(/^[가-힣|a-z|A-Z|0-9|\*]+$/);
+			var loginNameCheck = RegExp(/^[가-힣|a-z|A-Z|0-9_\-]{2,20}$/);
 			$.ajax({	
 				url : '${pageContext.request.contextPath}/user/nameCheck?name='+ name,
 				type : 'get',
@@ -108,31 +100,24 @@ $(function(){
 					console.log("1 = 중복o / 0 = 중복x : "+ data);							
 					if (data == 1) {
 						// 1 : 아이디가 중복되는 문구
-// 						$('#name').focus();
-						$("#name_check").text("사용중인 닉네임입니다");
+						$("#name_check").text("사용중인 닉네임 입니다.");
 						$("#name_check").css("color", "red");
-						
 					}
-					
-	 				if (!loginNameCheck.test($('#name').val())) {
-// 						$('#name').focus();		
-	 					$("#name_check").text("한글, 영문, 숫자만 입력 해주세요.");
+	 				if (!loginNameCheck.test($('#name').val())) {		
+	 					$("#name_check").text("한글 · 영문 · 숫자로 2글자 이상 입력 해주세요,");
 	 					$("#name_check").css("color", "red");
 	 				}
-	 				 
 	 				if (data == 0 && loginNameCheck.test($('#name').val())) {
 	 					$("#name_check").text("사용 가능한 닉네임 입니다.");
 	 					$("#name_check").css("color", "blue");
 	 					allClear['name'] = true;
 	 					update_reg_submit_disabled();
 	 				}
-	 				
-					if(name == ""){
-						$('#name').val('');
-						$('#name').focus();		
-						$('#name_check').text('닉네임을 입력해주세요');
+					if(name.length < 1){
+						$('#name').val('');		
+						$('#name_check').text('닉네임을 입력해주세요.');
 						$('#name_check').css('color', 'red');
-										
+
 					}
 				},
 				error : function() {
@@ -146,29 +131,24 @@ $(function(){
 		allClear['loginPw'] = false;
 		update_reg_submit_disabled();
 		
-		var loginPw = $(this).val();
+		var loginPw = $('#loginPw').val();
 		var loginId = $('#loginId').val();
 
 		if(loginPw != ""){
 			if (loginPw.length <= 3) {
 				$('#loginPw').val('');
 				$('#loginPw').focus();
-				$('#Pw_check').text('최소 4자리 입력해주세요');
-				$('#Pw_check').css('color', 'red');
-				
-			} else {
-				$('#Pw_check').text('');	
-					
-				allClear['loginPw'] = true;
-				update_reg_submit_disabled();
+				$('#Pw_check').text('최소 4자리 입력해주세요.');
+				$('#Pw_check').css('color', 'red');	
 			}
-
 			if (loginId == loginPw) {
 				$('#loginPw').val('');
-				$('#loginPw').focus();
-				$('#Pw_check').text('아이디와 비밀번호를 다르게 입력해주세요');
+				$('#Pw_check').text('아이디와 비밀번호를 다르게 입력해주세요.');
 				$('#Pw_check').css('color', 'red');
-				
+			} else {
+				$('#Pw_check').text('');		
+				allClear['loginPw'] = true;
+				update_reg_submit_disabled();
 			}
 		}
 
@@ -192,7 +172,8 @@ $(function(){
 				$('#Pwcf_check').css('color', 'red');
 				
 			} else {
-				$('#Pwcf_check').text('');
+				$('#Pwcf_check').text('비밀번호가 일치합니다.');
+				$('#Pwcf_check').css('color', 'blue');
 
 				allClear['loginPwConfirm'] = true;
 				update_reg_submit_disabled();
@@ -218,6 +199,10 @@ $(function(){
 		}
 	});
 });
+
+function scribeChk(){
+	$("#loginPwConfirm").blur();
+}
 <!--유효성 검사-->
 
 
@@ -266,7 +251,7 @@ $(function(){
 				</tr>
 				<tr>
 					<th>가입</th>
-					<td><input class="btn-a" id="reg_submit" type="submit"
+					<td><input onclick="javascript:scribeChk();" class="btn-a" id="reg_submit" type="submit"
 						value="가입"> <input class="btn-a" type="reset" value="취소"
 						onclick="location.href = '/';"></td>
 				</tr>
