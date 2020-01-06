@@ -31,7 +31,7 @@ $(function(){
 		name = name.trim();
 
 		if ( name.length > 0 ) {
-			var loginNameCheck = RegExp(/^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*]+$/);
+			var loginNameCheck = RegExp(/^[가-힣|a-z|A-Z|0-9|\*]+$/);
 			$.ajax({	
 				url : '${pageContext.request.contextPath}/user/nameCheck?name='+ name,
 				type : 'get',
@@ -39,7 +39,6 @@ $(function(){
 					console.log("1 = 중복o / 0 = 중복x : "+ data);							
 					if (data == 1) {
 						// 1 : 아이디가 중복되는 문구
-						$('#name').focus();
 						$("#name_check").text("사용중인 닉네임입니다");
 						$("#name_check").css("color", "red");
 					}
