@@ -220,14 +220,19 @@ public class MemberController {
 		long loginedMemberId = (long) session.getAttribute("loginedMemberId");
 
 		param.put("id", loginedMemberId);
-
+		
+		StringBuilder sb2 = new StringBuilder();
+		
 		String name = request.getParameter("name");
 		String afterPw = request.getParameter("afterPw");
-
+		String checkPw = request.getParameter("checkPw");
+		
+		
+		
 		name = name.trim();
 		afterPw = afterPw.trim();
-
-		StringBuilder sb2 = new StringBuilder();
+		checkPw = checkPw.trim();
+		
 		if (name.length() == 0) {
 			sb2.append("<script>");
 			sb2.append("alert('닉네임을 입력해주세요');");
@@ -254,6 +259,14 @@ public class MemberController {
 		if (afterPw.length() <= 3) {
 			sb2.append("<script>");
 			sb2.append("alert('비밀번호는 4자리 이상 입력해주세요');");
+			sb2.append("history.back();");
+			sb2.append("</script>");
+			return sb2.toString();
+		}
+		
+		if (checkPw.length() <= 3) {
+			sb2.append("<script>");
+			sb2.append("alert('비밀번호 확인을 입력하세요.');");
 			sb2.append("history.back();");
 			sb2.append("</script>");
 			return sb2.toString();

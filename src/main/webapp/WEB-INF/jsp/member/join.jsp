@@ -198,6 +198,13 @@ $(function(){
 			}
 		}
 	});
+
+	$('#joinForm').keydown(function(e) {
+	    // 만약 입력한 키코드가 13, 즉 엔터라면 함수를 실행한다.
+	    if ( e.keyCode == 13 ) {
+	    	return false;
+	    }
+	});
 });
 
 function scribeChk(){
@@ -209,7 +216,7 @@ function scribeChk(){
 </script>
 
 <div class="login-box con table-common">
-	<form action="./doJoin" method="POST">
+	<form action="./doJoin" method="POST" id="joinForm" name="joinForm">
 		<!-- " -->
 		<table>
 			<colgroup>

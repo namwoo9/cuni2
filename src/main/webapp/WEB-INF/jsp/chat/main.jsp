@@ -49,7 +49,7 @@ var chatWriter = '${loginedMember.getName()}';
 			<div class="message-group" data-date-str="${loginedMember.name}님"></div>
 		</div>
 		<div class="input-box">
-			<input type="text" id="text-input">
+			<input type="text" id="text-input" autofocus="autofocus">
 			<div class="btn-plus">
 				<button type="button" onclick="goTop()">Top</button>
 				<button type="button" class="home" onclick="homeAsk();">Home</button>

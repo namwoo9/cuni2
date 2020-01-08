@@ -10,6 +10,15 @@
 
 <script>
 	var chatWriter = '${loginedMember.getName()}';
+
+	function idStop() {
+		var result = confirm("계정을 정지 하시겠습니까?");
+		if (result) {
+
+		} else {
+			return;
+		}
+	}
 </script>
 <div class="list-1 table-common con">
 	<table>
@@ -32,8 +41,8 @@
 				<th>ID</th>
 				<th>이름</th>
 				<th>regDate</th>
-				<th>ID</th>
-				<th>PW</th>
+				<th>loginId</th>
+				<th>loginPw</th>
 				<th>Email</th>
 				<th>이메일키</th>
 				<th>이메일완료</th>
@@ -46,7 +55,7 @@
 		<tbody>
 			<c:forEach items="${list}" var="member">
 				<tr>
-					<td>${member.id}</td>
+					<td><a href="/">${member.id}</a></td>
 					<td>${member.name}</td>
 					<td>${member.regDate}</td>
 					<td>${member.loginId}</td>
@@ -57,8 +66,9 @@
 					<td>${member.delStatus}</td>
 					<td>${member.permissionLevel}</td>
 					<td>${member.stop}</td>
-					<td><a href="/member/idStop?id=${member.id}"><button>정지</button></a>
-						<a href="/member/idStopCancel?id=${member.id}"><button>해제</button></a>
+					<td><a href="/member/idStop?id=${member.id}"><button
+								onclick="idStop();">정지</button></a> <a
+						href="/member/idStopCancel?id=${member.id}"><button>해제</button></a>
 					</td>
 				</tr>
 			</c:forEach>

@@ -8,9 +8,7 @@
 
 <script>
 var allClear = {
-		name : false,
-		afterPw : false,
-		checkPw : false,
+		name : false
 };
 	function update_reg_submit_disabled() {
 		$('#reg_submit').prop('disabled', true);
@@ -35,6 +33,9 @@ $(function(){
 
 		if ( name.length > 0 ) {
 			var loginNameCheck = RegExp(/^[가-힣|a-z|A-Z|0-9|\*]+$/);
+
+			$('#reg_submit').prop('disabled', true);
+			
 			$.ajax({	
 				url : '${pageContext.request.contextPath}/user/nameCheck?name='+ name,
 				type : 'get',
@@ -62,10 +63,8 @@ $(function(){
 	 					allClear['name'] = true;
 	 					update_reg_submit_disabled();
 	 				}
-					if(name == ""){
-						$('#name').val('');
-						$('#name').focus();		
-						$('#name_check').text('닉네임을 입력해주세요');
+					if(name.length <= 1){
+						$('#name_check').text('닉네임을 최소 2글자 이상 입력해주세요');
 						$('#name_check').css('color', 'red');
 					}
 				},
@@ -76,79 +75,79 @@ $(function(){
 		}
 	});
 
-
-
-	$("#afterPw").blur(function() {
-		allClear['afterPw'] = false;
-		update_reg_submit_disabled();
-		
-		var afterPw = $('#afterPw').val();
-// 		var checkPw = $('#checkPw').val();
-
-		if(afterPw.length > 0){
-			if (afterPw.length <= 3) {
-				$('#afterPw').val('');
-				$('#afterPw_check').text('최소 4자리 입력해주세요.');
-				$('#afterPw_check').css('color', 'red');	
-			}
-// 			if (loginId == checkPw) {
-// 				$('#loginPw').val('');
-// 				$('#Pw_check').text('아이디와 비밀번호를 다르게 입력해주세요.');
-// 				$('#Pw_check').css('color', 'red');
-// 			} 
-
-			else {
-				$('#afterPw_check').text('');		
-				allClear['afterPw'] = true;
-				update_reg_submit_disabled();
-			}
-		}
-
-		// id = "id_reg" / name = "userId"
-	});
-
-	$("#checkPw").blur(function() {
-		allClear['checkPw'] = false;
-		update_reg_submit_disabled();
-		
-		var checkPw = $("#checkPw").val();
-		var afterPw = $("#afterPw").val();
-
-		if ( checkPw.length > 0 ) {
-			
-			if(afterPw != checkPw){
-				$('#afterPw').val('');
-				$('#checkPw').val('');
-				$('#afterPw').focus();
-				$('#checkPw_check').text('비밀번호와 일치하지 않습니다.');
-				$('#checkPw_check').css('color', 'red');
-				
-			} else {
-				$('#checkPw_check').text('비밀번호가 일치합니다.');
-				$('#checkPw_check').css('color', 'blue');
-
-				allClear['checkPw'] = true;
-				update_reg_submit_disabled();
-			}
-		}
+	$('#modifyForm').keydown(function(e) {
+	    // 만약 입력한 키코드가 13, 즉 엔터라면 함수를 실행한다.
+	    if ( e.keyCode == 13 ) {
+	    	return false;
+	    }
 	});
 });
 
-function dd() {
-	$("#name").blur();
-	$("#afterPw").blur();
-	$("#checkPw").blur();
+function modifyFormSubmited(form){
+	form.name.value =  form.name.value.trim();
+
+	if (form.name.value.length == 0) {
+		alert('닉네임을 입력해주세요.');
+		form.name.focus();
+		return false;
+	}
+
+	form.name.value =  form.name.value.trim();
+
+	if (form.name.value.length == 0) {
+		alert('닉네임을 입력해주세요.');
+		form.name.focus();
+		return false;
+	}
+
+	form.afterPw.value =  form.afterPw.value.trim();
+
+	if (form.afterPw.value.length == 0) {
+		alert('변경할 비밀번호를 입력해주세요.');
+		form.afterPw.focus();
+		return false;
+	}
+
+	if (form.afterPw.value.length <= 3) {
+		alert('비밀번호를 최소 4글자 이상 입력해주세요.');
+		form.afterPw.value = '';
+		form.checkPw.value = '';
+		form.afterPw.focus();
+		return false;
+	}
+
+	form.checkPw.value =  form.checkPw.value.trim();
+
+	if (form.checkPw.value.length == 0) {
+		alert('비밀번호 확인을 입력해주세요.');
+		form.checkPw.focus();
+		return false;
+	}
+
+	if (form.checkPw.value != form.afterPw.value ) {
+		alert('비밀번호와 일치하지 않습니다. ');
+		form.checkPw.value = '';
+		form.checkPw.focus();
+		return false;
+	}
+	form.submit();
 }
 
 
+
+	// function dd() {
+	// 	$("#name").blur();
+	// }
+
+	
 </script>
 
 
 
 <div class="con table-common">
-	<form action="./doModify" method="POST"
+	<form action="./doModify" id="modifyForm" method="POST"
 		onsubmit="modifyFormSubmited
-			(this); return false;">
+			(this); return false; ">
 		<table>
 			<colgroup>
 				<col width="170">
@@ -157,7 +156,7 @@ function dd() {
 				<tr>
 					<th>닉네임</th>
 					<td><input type="text" id="name" name="name"
-						value="${loginedMember.name}" autocomplete="off">
+						value="${loginedMember.name}" autocomplete="off" autofocus="autofocus">
 					<div class="check_font" id="name_check"></div></td>
 				</tr>
 				<!-- 				<tr> -->
@@ -181,7 +180,7 @@ function dd() {
 
 				<tr>
 					<th>수정</th>
-					<td><input onclick="dd();" class="btn-a" type="submit" value="수정"
+					<td><input onclick="goData();" class="btn-a" type="submit" value="수정"
 						id="reg_submit"> <input class="btn-a" type="reset"
 						value="취소"
 						onclick="location.href = '/member/myPage?id=${loginedMember.id}';">
