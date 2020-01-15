@@ -58,9 +58,9 @@ public class MemberServiceImpl implements MemberService {
 		loginedMemberId = loginedMember.getId();
 		loginedMemberName = loginedMember.getName();
 
-		if (loginedMember.getStop() > 0) {
+		if (loginedMember.getStop() == 1) {
 			resultCode = "F-3";
-			msg = "정지된 회원 입니다";
+			msg = "접근이 불가한 계정입니다.";
 
 			return Maps.of("resultCode", resultCode, "msg", msg);
 		}
