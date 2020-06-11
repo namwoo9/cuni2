@@ -25,7 +25,6 @@ public class ArticleController {
 	@Autowired
 	private ArticleService articleService;
 
-	// 게시물 리스팅
 	@RequestMapping("article/list")
 	public String showList(Model model, @RequestParam Map<String, Object> param, long boardId) {
 		Board board = articleService.getBoard(boardId);
@@ -39,14 +38,16 @@ public class ArticleController {
 			param.put("page", "1");
 		}
 
+		int totalItemsCount = articleService._getArticleCount(param);
+	
 		Map<String, Object> pagedListRs = articleService.getPagedList(param);
-
+		
 		model.addAttribute("pagedListRs", pagedListRs);
+		model.addAttribute("totalItemsCount", totalItemsCount);
 
 		return "article/list";
 	}
 
-	// 게시물 상세페이지
 	@RequestMapping("article/detail")
 	public String showDetail(@RequestParam(value = "id", defaultValue = "0") int id, Model model, long boardId) {
 		Board board = articleService.getBoard(boardId);

@@ -53,6 +53,7 @@ public class ArticleServiceImpl implements ArticleService {
 		Map<String, Object> rs = new HashMap<>();
 
 		int totalItemsCount = _getCount(param);
+		
 		int lastPage = (int) Math.ceil(totalItemsCount / (double) ArticleServiceImpl.LIST_ITEMS_COUNT_IN_A_PAGE);
 
 		rs.put("page", CUtil.getAsInt(param.get("page")));
@@ -225,6 +226,12 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public Board getBoard(long id) {
 		return articleDao.getBoard(id);
+	}
+
+	@Override
+	public int _getArticleCount(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return articleDao.getCount(param);
 	}
 
 }

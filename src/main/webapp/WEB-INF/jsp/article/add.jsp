@@ -14,7 +14,7 @@
 
 		if (form.title.value.length == 0) {
 
-			alert('제목을 입력해주주세요.');
+			alert('제목을 입력해주세요.');
 
 			form.title.focus();
 
@@ -54,12 +54,9 @@
 </head>
 
 <body>
-
 	<div class="con table-common">
-
 		<form action="./doAdd" method="POST"
 			onsubmit="addFormSubmited(this); return false;">
-
 			<input type="hidden" name="boardId" value="${param.boardId}">
 			<table>
 				<colgroup>
@@ -67,10 +64,18 @@
 					<col>
 				</colgroup>
 				<tbody>
+					<%--${MemberPermissionLevel} --%>
+					<%--<c:if test="${MemberPermissionLevel == 1}"> --%>
+					<!--	<tr> -->
+					<!--		<th>제목</th> -->
+					<!--		<td><input type="text" name="title" placeholder="제목" -->
+					<!--			autocomplete="off" maxlength="30"></td> -->
+					<!--	</tr> -->
+					<%--</c:if> --%>
 					<tr>
 						<th>제목</th>
 						<td><input type="text" name="title" placeholder="제목"
-							autocomplete="off" maxlength="30	"></td>
+							autocomplete="off" maxlength="30"></td>
 					</tr>
 					<tr>
 						<th>내용</th>
@@ -87,5 +92,4 @@
 			</table>
 		</form>
 	</div>
-
 	<%@ include file="../part/foot.jspf"%>

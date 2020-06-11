@@ -6,7 +6,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <c:set var="pageTitle" value="${board.name} 글 리스트" />
 <%@ include file="../part/head.jspf"%>
-
+ 
 <div class="con">
 
 	<form action="./list" method="GET">
@@ -21,7 +21,8 @@
 			<option value="new">최신순</option>
 			<option value="old">오래된순</option>
 		</select>
-
+		<span>
+		</span>
 		<c:if test="${param.arrayType != null && param.arrayType != ''}">
 			<script>
 				$('select[name="arrayType"]').val('${param.arrayType}');
@@ -29,11 +30,11 @@
 		</c:if>
 		<input type="submit" value="정렬" />
 	</form>
-
+	<span>
+		<span>총 게시물 수 : </span>
+		<span>${totalItemsCount}</span>
+	</span>
 </div>
-
-<br>
-
 <div class="list-1 table-common con">
 	<table>
 		<colgroup>

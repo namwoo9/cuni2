@@ -41,4 +41,6 @@ public interface MemberService {
 
 	public int userbeforePwCheck(String beforePw);
 
+	public void idDel(int id);
+
 }

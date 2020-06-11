@@ -7,8 +7,7 @@
 		SELECT *
 		FROM member
 		WHERE loginId = #{loginId}
-		AND loginPw =
-		#{loginPw}
+		AND loginPw = #{loginPw}
 		AND delStatus = 0
 	</select>
 
@@ -123,7 +122,15 @@
 		UPDATE member
 		SET `stop` =
 		0
-		WHERE id = #{id};
+		WHERE id = #{id}
+	</update>
+
+	<update id="idDel" parameterType="int">
+		<!--  DELETE FROM member WHERE id = #{id}-->
+		UPDATE `member`
+		SET
+		delStatus = 1
+		WHERE id = #{id}
 	</update>
 
 	<resultMap type="Member" id="Member">

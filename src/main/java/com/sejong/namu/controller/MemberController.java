@@ -32,7 +32,7 @@ public class MemberController {
 
 	@RequestMapping("/member/idStop")
 	@ResponseBody
-	public String idStop(Model model, HttpServletRequest request, int id) {
+	public String idStop(HttpSession session, Model model, HttpServletRequest request, int id) {
 
 		Member member = (Member) request.getAttribute("loginedMember");
 
@@ -47,13 +47,15 @@ public class MemberController {
 			sb2.append("</script>");
 			return sb2.toString();
 		}
+	
 
 		memberService.stop(id);
-
+		session.removeAttribute("id");
+		
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<script>");
-		sb.append(" alert('정지');");
+		sb.append(" alert('해당 아이디가 정지 되었습니다,');");
 		sb.append(" location.href='./authority';");
 		sb.append("</script>");
 
@@ -83,7 +85,34 @@ public class MemberController {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<script>");
-		sb.append(" alert('해제');");
+		sb.append(" alert('해당 아이디 정지가 해제 되었습니다.');");
+		sb.append(" location.href='./authority';");
+		sb.append("</script>");
+
+		return sb.toString();
+	}
+	
+	@RequestMapping("/member/idDel")
+	@ResponseBody
+	public String idDel(Model model, HttpServletRequest request, int id) {
+		Member member = (Member) request.getAttribute("loginedMember");
+		
+		StringBuilder sb2 = new StringBuilder();
+
+		if (member.getPermissionLevel() < 1) {
+			sb2.append("<script>");
+			sb2.append(" alert('권한이 없습니다.'); ");
+			sb2.append(" history.back(); ");
+			sb2.append("</script>");
+			return sb2.toString();
+		}
+		
+		memberService.idDel(id);
+				
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<script>");
+		sb.append(" alert('해당 아이디가 삭제 되었습니다.');");
 		sb.append(" location.href='./authority';");
 		sb.append("</script>");
 
@@ -109,7 +138,7 @@ public class MemberController {
 		return "member/authority";
 	}
 
-	@RequestMapping("member/auto")
+	@RequestMapping("member/findInfo")
 	public String findInfo() {
 		return "member/findInfo";
 	}
@@ -316,7 +345,7 @@ public class MemberController {
 		long loginedMemberId = (long) session.getAttribute("loginedMemberId");
 		param.put("id", loginedMemberId);
 		Map<String, Object> rs = memberService.updateDelStatus(param);
-//		session.removeAttribute("loginedMemberId");
+		session.removeAttribute("loginedMemberId");
 
 		String msg = (String) rs.get("msg");
 		String resultCode = (String) rs.get("resultCode");

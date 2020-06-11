@@ -39,4 +39,6 @@ public interface ArticleService {
 	public Map<String, Object> checkDeletePermmision(long id, long loginedMemberId);
 
 	public Board getBoard(long boardId);
+
+	public int _getArticleCount(Map<String, Object> param);
 }

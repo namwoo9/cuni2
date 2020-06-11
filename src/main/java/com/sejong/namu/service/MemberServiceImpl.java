@@ -43,14 +43,14 @@ public class MemberServiceImpl implements MemberService {
 
 		if (loginedMember == null) {
 			resultCode = "F-1";
-			msg = "아이디와 비밀번호를 다시 입력해주세요.";
+			msg = "아이디 혹은 비밀번호가 일치하지 않습니다.";
 
 			return Maps.of("resultCode", resultCode, "msg", msg);
 		}
 
 		if (loginedMember.isEmailAuthStatus() == false) {
 			resultCode = "F-2";
-			msg = "이메일 인증을 진행해주세요";
+			msg = "이메일 인증을 진행해주세요.";
 
 			return Maps.of("resultCode", resultCode, "msg", msg);
 		}
@@ -65,14 +65,13 @@ public class MemberServiceImpl implements MemberService {
 			return Maps.of("resultCode", resultCode, "msg", msg);
 		}
 
-		if (loginedMember.getPermissionLevel() != 1) {
+		if (loginedMember.getPermissionLevel() == 0) {
 			resultCode = "S-1";
 			msg = loginedMemberName + "님 안녕하세요";
 
 		} else {
 			resultCode = "S-2";
 			msg = "관리자 접속";
-
 		}
 		return Maps.of("resultCode", resultCode, "msg", msg, "loginedMemberId", loginedMemberId, "loginedMemberName",
 				loginedMemberName);
@@ -201,10 +200,10 @@ public class MemberServiceImpl implements MemberService {
 
 		Map<String, Object> rs = new HashMap<String, Object>();
 
-//		memberDao.updateDelStatus(param);
+		memberDao.updateDelStatus(param);
 
 		rs.put("resultCode", "S-1");
-		rs.put("msg", "관리자에게 문의하세요.");
+		rs.put("msg", "탈퇴가 완료 되었습니다.");
 
 		return rs;
 	}
@@ -251,5 +250,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int userbeforePwCheck(String beforePw) {
 		return memberDao.checkOverbeforePw(beforePw);
+	}
+
+	@Override
+	public void idDel(int id) {
+		memberDao.idDel(id);
 	}
 }

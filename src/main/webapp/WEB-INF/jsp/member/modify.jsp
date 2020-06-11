@@ -156,7 +156,7 @@ function modifyFormSubmited(form){
 				<tr>
 					<th>닉네임</th>
 					<td><input type="text" id="name" name="name"
-						value="${loginedMember.name}" autocomplete="off" autofocus="autofocus">
+						value="${loginedMember.name}" autocomplete="off" autofocus="autofocus" required="required">
 					<div class="check_font" id="name_check"></div></td>
 				</tr>
 				<!-- 				<tr> -->
@@ -170,12 +170,12 @@ function modifyFormSubmited(form){
 				<tr>
 					<th>변경할 비밀번호</th>
 					<td><input type="password" name="afterPw"  id="afterPw" maxlength="10"
-						placeholder="변경할 비밀번호"><div class="check_font" id="afterPw_check"></div></td>
+						placeholder="변경할 비밀번호" required="required"><div class="check_font" id="afterPw_check"></div></td>
 				</tr>
 				<tr>
 					<th>비밀번호 확인</th>
 					<td><input type="password" name="checkPw" id="checkPw" maxlength="10"
-						placeholder="변경할 비밀번호 확인"><div class="check_font" id="checkPw_check"></div></td>
+						placeholder="변경할 비밀번호 확인" required="required"><div class="check_font" id="checkPw_check"></div></td>
 				</tr>
 
 				<tr>

@@ -42,4 +42,6 @@ public interface MemberDao {
 
 	public int checkOverbeforePw(String beforePw);
 
+	public void idDel(int id);
+
 }
